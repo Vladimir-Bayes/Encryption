@@ -3,8 +3,9 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;  
 import java.security.NoSuchAlgorithmException;  
 import java.security.interfaces.RSAPrivateKey;  
-import java.security.interfaces.RSAPublicKey;  
-  
+import java.security.interfaces.RSAPublicKey;
+import java.util.Base64;
+
 import javax.crypto.BadPaddingException;  
 import javax.crypto.Cipher;  
 import javax.crypto.IllegalBlockSizeException;  
@@ -84,7 +85,11 @@ public class EncrypRSA {
         RSAPrivateKey privateKey = (RSAPrivateKey)keyPair.getPrivate();               
         //得到公钥  
         RSAPublicKey publicKey = (RSAPublicKey)keyPair.getPublic();  
-          
+        
+        
+        System.out.println(publicKey);
+        System.out.println(privateKey);
+        
         //用公钥加密  
         byte[] srcBytes = msg.getBytes();  
         byte[] resultBytes = rsa.encrypt(publicKey, srcBytes);  
@@ -93,7 +98,8 @@ public class EncrypRSA {
         byte[] decBytes = rsa.decrypt(privateKey, resultBytes);  
           
         System.out.println("明文是:" + msg);  
-        System.out.println("加密后是:" + new String(resultBytes));  
+        System.out.println("加密后的原始结果是:" + new String(resultBytes));
+        System.out.println("加密后以Base64编码的结果是："+Base64.getEncoder().encodeToString(resultBytes));
         System.out.println("解密后是:" + new String(decBytes));  
     }  
 }
